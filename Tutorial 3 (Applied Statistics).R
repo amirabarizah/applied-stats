@@ -1,6 +1,7 @@
 library(faraway)
 data(teengamb)
 
+help("teengamb")
 print(names(teengamb))
 #[1] "sex"    "status" "income" "verbal" "gamble"
 
@@ -42,7 +43,7 @@ summary(model)
 
 ##--QUESTION 3------------------------------------------------------------------
 
-# The co-efficient for the "Income" variable has a very low p-value (< 0.001)
+# The co-efficient for the "Income" variable, which is 1.79e-05, has a very low p-value (< 0.001) 
 # "Income" variable is highly statistically significant
 
 # The co-efficient for "Sex" variable has a p-value of 0.0101, which is less than 0.05
@@ -55,49 +56,60 @@ summary(model)
 
 ##--QUESTION 5------------------------------------------------------------------
 
-largest_residual <- which.max(model$residuals)
+View(model$residuals)
+
+largest_residual <- max(model$residuals)
 largest_residual
 
-# 24 
+# [1] 94.25222
+
+case_number <- which.max(model$residuals)
+case_number
+
+# 24
 
 ##--QUESTION 6------------------------------------------------------------------
 
 mean_residual <- mean(model$residuals)
 mean_residual
 
-#[1] 1.266127e-15
+# [1] 1.266127e-15
 
 median_residual <- median(model$residuals)
 median_residual
 
-#[1] -1.451392
+# [1] -1.451392
 
 ##--QUESTION 7------------------------------------------------------------------
 
 correlation_residual_fitted <- cor(model$residuals, model$fitted.values)
 correlation_residual_fitted
 
-#[1] -6.821332e-17
+# [1] -6.821332e-17 (No correlation)
 
 ##--QUESTION 8------------------------------------------------------------------
 
 correlation_residual_income <- cor(model$residuals, teengamb$income)
 correlation_residual_income
 
-#[1] -5.717345e-17
+#[1] -5.717345e-17 (No correlation)
 
 ##--QUESTION 9------------------------------------------------------------------
 
-# Expenditure = 22.55565 - (22.11833 * sex) + (0.05223 * status) + (4.96198 * income) - (2.95 * verbal)  
+# y = 22.55565 - (22.11833 * X1) + (0.05223 * X2) + (4.96198 * X3) - (2.95 * X4)  
+# Expenditure = 22.556 - (22.118 * sex) + (0.052 * status) + (4.961 * income) - (2.95 * verbal)
 
 ##--QUESTION 10------------------------------------------------------------------
 
 # The predicted expenditure on gambling for a male, while holding the other predictors constant is 
 # expected to be approximately 22.12 units lower than for a female
 
-##--QUESTION 10------------------------------------------------------------------
+# i.e. Female spends 22.12 units less than male on gambling
 
-confidence_interval <- confint(model, level = 0.99)
+
+##--QUESTION 11------------------------------------------------------------------
+
+confidence_interval <- confint(model, level = 0.990)
 confidence_interval
 
 #                  0.5 %      99.5 %
@@ -107,27 +119,32 @@ confidence_interval
 # income        2.1954029  7.72855554
 # verbal       -8.8200989  2.90111186
 
-##--QUESTION 11-----------------------------------------------------------------
-
-# Linearity 
-# Relationship between the predictors and the response variable is assumed to be linear
-
-# Independence 
-# The observations are independent of each other
-
-# Normality
-# Assumed to be normally distributed
-
-# Equal variance
-# The variance are assumed to be equal
-
 ##--QUESTION 12-----------------------------------------------------------------
 
-plot(model$fitted.values, model$residuals, xlab = "Fitted Values", ylab = "Residuals", main = "Residuals vs. Fitted Values")
+# Linear regression: Checking the residuals 
+# 1. Linearity 
+# Relationship between the predictors and the response variable is assumed to be linear
 
-# The scatterplot has a cone-shaped, therefore it exhibits constant variance
+# 2. Independence 
+# The observations are independent of each other
+
+# 3. Normality
+# Assumed to be normally distributed
+
+# 4. Equal variance - Homosedascity 
+# The variance are assumed to be equal
 
 ##--QUESTION 13-----------------------------------------------------------------
+
+par(mfrow=c(1,1))
+plot(model$fitted.values, model$residuals, xlab = "Fitted Values", ylab = "Residuals", main = "Residuals vs. Fitted Values")
+
+# The scatterplot has a cone-shaped, therefore it exhibits non constant variance
+
+##--QUESTION 14-----------------------------------------------------------------
+
+qqnorm(model$residuals, main="QQ-Norm of Residuals")
+qqline(model$residuals)
 
 shapiro.test(model$residuals)
 
@@ -135,16 +152,17 @@ shapiro.test(model$residuals)
 # 
 # data:  model$residuals
 # W = 0.86839, p-value = 8.16e-05
-# Reject the null hypothesis 
-# Therefore, the data is not normally distributed
+# Reject the null hypothesis (H0 : Normally distributed, H1: Not normally distributed)
+# Therefore, the residuals is not normally distributed (The model is not a good model)
 
-##--QUESTION 13-----------------------------------------------------------------
+##--QUESTION 15-----------------------------------------------------------------
 
-
-
-
+plot(model$residuals, ylab = "Residuals", xlab = "Case number", main = "Residuals")
 
 
+##---HOW TO IMPROVE THE MODEL?--------------------------------------------------
+# 1. Observe the signifance level of the variables (Backward Elimination)
+# 2. Check with AIC - The smaller the model, the better
 
 
 
