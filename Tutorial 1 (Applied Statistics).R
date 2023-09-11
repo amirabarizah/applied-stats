@@ -9,19 +9,30 @@ data(pima)
 #to focus on data from pima
 attach(pima)
 
-mean(pregnant)
-median(pregnant)
-sd(pregnant)
+mean(pregnant) 
+# [1] 3.845052
+median(pregnant) 
+# [1] 3
+sd(pregnant) 
+# [1] 3.369578
 var(pregnant)
+# [1] 11.35406
 mad(pregnant) #median absolute deviation
+# [1] 2.9652
 IQR(pregnant) #interquartile range
+# [1] 2.9652
 
-mean(diastolic)
+
 median(diastolic)
+# [1] 72
 sd(diastolic)
+# [1] 19.35581
 var(diastolic)
+# [1] 374.6473
 mad(diastolic) #median absolute deviation
+# [1] 11.8608
 IQR(diastolic) #interquartile range
+# [1] 18
 
 
 ##--METHOD 2:-------------------------------------------------------------------
@@ -29,20 +40,31 @@ IQR(diastolic) #interquartile range
 pima$pregnant
 
 mean(pima$pregnant)
+# [1] 3.845052
 median(pima$pregnant)
+# [1] 3
 sd(pima$pregnant)
+# [1] 3.369578
 var(pima$pregnant)
+# [1] 11.35406
 mad(pima$pregnant)
+# [1] 2.9652
 IQR(pima$pregnant)
+# [1] 5
 
 #extracting "diastolic" data
 pima$diastolic
 
 mean(pima$diastolic)
+# [1] 69.10547
 median(pima$diastolic)
+# [1] 72
 sd(pima$diastolic)
+# [1] 19.35581
 var(pima$diastolic)
+# [1] 374.6473
 IQR(pima$diastolic)
+# [1] 18
 
 ##--PART B----------------------------------------------------------------------
 par(mfrow=c(2,2))
@@ -68,7 +90,7 @@ precipitation
 
 qqnorm(precipitation,main="QQ-Plot of Precipitation")
 qqline(precipitation)
-#the QQ-Plot is not normal as it is in U shape
+#The points on the QQ-plot exhibit a U-shape which indicates departure from normality
 
 ##--PART B----------------------------------------------------------------------
 #assigning the data to an object
@@ -90,18 +112,20 @@ shapiro.test(precipitation)
 # 
 # data:  precipitation
 # W = 0.923, p-value = 0.03211
-# 
+
 # #Important note: If the p-value is below 0.05, we reject the null hypothesis (Null hypothesis = Normal distribution)
-# 
-# shapiro.test (log(x))
+
+shapiro.test (log(x))
+
 # Shapiro-Wilk normality test
-# 
+#
 # data:  log(precipitation)
 # W = 0.98444, p-value = 0.9272
 # #Important note: If the p-value is above 0.05, we accept the null hypothesis (Null hypothesis = Normal distribution)
 
 ##--QUESTION 3------------------------------------------------------------------
 ##--PART A----------------------------------------------------------------------
+#generate 600 random sample with mean 10 and sd 5
 y <- rnorm(600,10,4)
 help(rnorm) #to inspect the function
 
@@ -111,6 +135,7 @@ hist(y)
 
 ##--QUESTION 4------------------------------------------------------------------
 ##--PART A----------------------------------------------------------------------
+#generate 5000 random samples with rate = 1
 z <- rexp(5000,rate=1)
 help(rexp)
 

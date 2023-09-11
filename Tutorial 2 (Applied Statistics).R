@@ -59,16 +59,16 @@ wilcox.test(Nitrogen.from.chemical.compounds,Nitrogen.from.air,paired=F)
 
 
 #Q1 -Input the data (D)
-D <- data.frame (
-  Music = c(35.0,36.8,40.2,46.6,50.4,64.2,83.0,87.6,89.2),
-  No.Music = c(28.2,28.6,33.0,34.8,45.4,50.8,52.6,66.4,67.8)
-)
+D <- data.frame (Music, No.Music)
 
-View(D)
+Music = c(35.0,36.8,40.2,46.6,50.4,64.2,83.0,87.6,89.2)
+No.Music = c(28.2,28.6,33.0,34.8,45.4,50.8,52.6,66.4,67.8)
+
 attach(D)
 
-#Variance test between the two samples - Check the Fstats (F = 1 is equal variance & vice versa)
+#Check for equal or unequal variance - Check the p-value (H0: The variance are not significantly different)
 var.test(Music,No.Music)
+#Conclusion: Since the p-value is 0.3048 (>0.05), there is no evidence that the variance of Music and No Music are significantly different
 
 #Check for the normality of both 
 shapiro.test(Music)
